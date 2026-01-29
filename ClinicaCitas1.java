@@ -2,7 +2,7 @@ package proyecto;
 
 import java.util.Scanner;
 
-public class ClinicaCitas1 {
+public class ClinicaCitas {
 
     public static void main(String[] args) {
 
@@ -25,7 +25,7 @@ public class ClinicaCitas1 {
             System.out.println("2. Buscar paciente");
             System.out.println("3. Agendar / Desagendar cita");
             System.out.println("4. Ordenar citas");
-            System.out.println("5. Reporte general (recursivo)");
+            System.out.println("5. Reporte general");
             System.out.println("6. Salir");
 
             opcion = Integer.parseInt(sc.nextLine());
@@ -33,15 +33,31 @@ public class ClinicaCitas1 {
             switch (opcion) {
                 // Se creó la estructura básica del menú
                 // Se inicializaron los arreglos con datos de pacientes
-                // Switch preparado para implementar funcionalidades
+                // Se implementaron las primeras 3 funcionalidades
 
                 case 1:
+                    mostrarCitas(paciente, codigo, precio, agendadas);
                     break;
 
                 case 2:
+                    System.out.print("Ingrese codigo o nombre: ");
+                    String busqueda = sc.nextLine();
+                    buscarPaciente(paciente, codigo, agendadas, busqueda);
                     break;
 
                 case 3:
+                    System.out.println("1. Agendar");
+                    System.out.println("2. Desagendar");
+                    int sub = Integer.parseInt(sc.nextLine());
+
+                    System.out.print("Ingrese codigo del paciente: ");
+                    String cod = sc.nextLine();
+
+                    if (sub == 1) {
+                        agendadas = agendarCita(codigo, agendadas, cod, maxCitas);
+                    } else if (sub == 2) {
+                        agendadas = desagendarCita(codigo, agendadas, cod);
+                    }
                     break;
 
                 case 4:
@@ -59,5 +75,61 @@ public class ClinicaCitas1 {
             }
 
         } while (opcion != 6);
+    }
+
+    // Muestra la lista completa de pacientes con sus datos
+    // Necesita: arreglos de pacientes, códigos, precios y citas agendadas
+    static void mostrarCitas(String[] paciente, String[] codigo, double[] precio, int[] agendadas) {
+        for (int i = 0; i < paciente.length; i++) {
+            System.out.println(codigo[i] + " | " +paciente[i] + " | Precio: $" +precio[i] + " | Citas: " +agendadas[i]);
+        }
+    }
+
+    // Busca un paciente por código o nombre y muestra sus citas
+    // Necesita: arreglos de pacientes, códigos, citas agendadas y texto de búsqueda
+    static void buscarPaciente(String[] paciente, String[] codigo, int[] agendadas, String busqueda) {
+        boolean encontrado = false;
+
+        for (int i = 0; i < paciente.length; i++) {
+            if (codigo[i].equalsIgnoreCase(busqueda) ||paciente[i].equalsIgnoreCase(busqueda)) {
+
+                System.out.println(paciente[i] + " tiene " + agendadas[i] + " citas");
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("Paciente no encontrado");
+        }
+    }
+
+    // Incrementa el número de citas de un paciente
+    // Necesita: arreglo de códigos, citas agendadas, código del paciente y máximo de citas
+    static int[] agendarCita(String[] codigo, int[] agendadas, String cod, int maxCitas) {
+        for (int i = 0; i < codigo.length; i++) {
+            if (codigo[i].equalsIgnoreCase(cod)) {
+                if (agendadas[i] < maxCitas) {
+                    agendadas[i]++;
+                } else {
+                    System.out.println("Maximo de citas alcanzado");
+                }
+            }
+        }
+        return agendadas;
+    }
+
+    // Disminuye el número de citas de un paciente
+    // Necesita: arreglo de códigos, citas agendadas y código del paciente
+    static int[] desagendarCita(String[] codigo, int[] agendadas, String cod) {
+        for (int i = 0; i < codigo.length; i++) {
+            if (codigo[i].equalsIgnoreCase(cod)) {
+                if (agendadas[i] > 0) {
+                    agendadas[i]--;
+                } else {
+                    System.out.println("No se puede bajar de 0");
+                }
+            }
+        }
+        return agendadas;
     }
 }
