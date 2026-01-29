@@ -26,14 +26,15 @@ public class ClinicaCitas {
             System.out.println("3. Agendar / Desagendar cita");
             System.out.println("4. Ordenar citas");
             System.out.println("5. Reporte general");
-            System.out.println("6. Salir");
+            System.out.println("6. Clasificar pacientes");
+            System.out.println("7. Pacientes con alta demanda");
+            System.out.println("8. Salir");
 
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
-                // Se creó la estructura básica del menú
-                // Se inicializaron los arreglos con datos de pacientes
-                // Se implementaron las primeras 3 funcionalidades
+                // Se agregaron las opciones 6 y 7 al menú
+                // Se implementaron las funciones de ordenar y reporte recursivo
 
                 case 1:
                     mostrarCitas(paciente, codigo, precio, agendadas);
@@ -61,12 +62,24 @@ public class ClinicaCitas {
                     break;
 
                 case 4:
+                    agendadas = ordenarCitas(paciente, codigo, precio, agendadas);
+                    System.out.println("\nCitas ordenadas:");
+                    mostrarCitas(paciente, codigo, precio, agendadas);
                     break;
 
                 case 5:
+                    int total = reporte(agendadas, 0);
+                    System.out.println("Total de citas agendadas: " + total);
+                    System.out.println("Capacidad maxima: " + (maxCitas * agendadas.length));
                     break;
 
                 case 6:
+                    break;
+
+                case 7:
+                    break;
+
+                case 8:
                     System.out.println("Saliendo del sistema...");
                     break;
 
@@ -74,7 +87,7 @@ public class ClinicaCitas {
                     System.out.println("Opcion invalida");
             }
 
-        } while (opcion != 6);
+        } while (opcion != 8);
     }
 
     // Muestra la lista completa de pacientes con sus datos
@@ -131,5 +144,42 @@ public class ClinicaCitas {
             }
         }
         return agendadas;
+    }
+
+    // Ordena las citas de menor a mayor usando burbuja
+    // Necesita: arreglos de pacientes, códigos, precios y citas agendadas
+    static int[] ordenarCitas(String[] paciente, String[] codigo, double[] precio, int[] agendadas) {
+        for (int i = 0; i < agendadas.length - 1; i++) {
+            for (int j = 0; j < agendadas.length - 1; j++) {
+                if (agendadas[j] > agendadas[j + 1]) {
+
+                    int temp = agendadas[j];
+                    agendadas[j] = agendadas[j + 1];
+                    agendadas[j + 1] = temp;
+
+                    String aux = paciente[j];
+                    paciente[j] = paciente[j + 1];
+                    paciente[j + 1] = aux;
+
+                    aux = codigo[j];
+                    codigo[j] = codigo[j + 1];
+                    codigo[j + 1] = aux;
+
+                    double p = precio[j];
+                    precio[j] = precio[j + 1];
+                    precio[j + 1] = p;
+                }
+            }
+        }
+        return agendadas;
+    }
+
+    // Calcula el total de citas usando recursividad
+    // Necesita: arreglo de citas agendadas y posición inicial
+    static int reporte(int[] agendadas, int i) {
+        if (i == agendadas.length) {
+            return 0;
+        }
+        return agendadas[i] + reporte(agendadas, i + 1);
     }
 }
