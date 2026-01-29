@@ -2,7 +2,7 @@ package proyecto;
 
 import java.util.Scanner;
 
-public class ClinicaCitas {
+public class ClinicaCitas1 {
 
     public static void main(String[] args) {
 
@@ -216,3 +216,4 @@ public class ClinicaCitas {
         }
     }
 }
+
