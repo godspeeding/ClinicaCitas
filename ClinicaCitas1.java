@@ -25,7 +25,7 @@ public class ClinicaCitas1 {
             System.out.println("2. Buscar paciente");
             System.out.println("3. Agendar / Desagendar cita");
             System.out.println("4. Ordenar citas");
-            System.out.println("5. Reporte general");
+            System.out.println("5. Reporte general (recursivo)");
             System.out.println("6. Clasificar pacientes");
             System.out.println("7. Pacientes con alta demanda");
             System.out.println("8. Salir");
@@ -81,11 +81,11 @@ public class ClinicaCitas1 {
                     break;
 
                 case 8:
-                    System.out.println("Saliendo del sistema...");
+                    System.out.println("Gracias por usar el sistema, ponganos 20 profe jajajjaja");
                     break;
 
                 default:
-                    System.out.println("Opcion invalida");
+                    System.out.println("Error: humano defectuoso");
             }
 
         } while (opcion != 8);
@@ -201,7 +201,7 @@ public class ClinicaCitas1 {
     // Muestra pacientes con más de 5 citas agendadas
     // Necesita: arreglos de pacientes y citas agendadas
     static void pacientesAltaDemanda(String[] paciente, int[] agendadas) {
-        System.out.println("\n--- PACIENTES CON ALTA DEMANDA ---");
+        System.out.println("\n--- Pacientes Con Alta Demanda ---");
         boolean hay = false;
 
         for (int i = 0; i < paciente.length; i++) {
@@ -216,4 +216,3 @@ public class ClinicaCitas1 {
         }
     }
 }
-
