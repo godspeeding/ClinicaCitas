@@ -33,8 +33,7 @@ public class ClinicaCitas {
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
-                // Se agregaron las opciones 6 y 7 al menú
-                // Se implementaron las funciones de ordenar y reporte recursivo
+                // Se implementaron las funciones de clasificación y filtro de alta demanda
 
                 case 1:
                     mostrarCitas(paciente, codigo, precio, agendadas);
@@ -74,9 +73,11 @@ public class ClinicaCitas {
                     break;
 
                 case 6:
+                    clasificarPacientes(paciente, agendadas);
                     break;
 
                 case 7:
+                    pacientesAltaDemanda(paciente, agendadas);
                     break;
 
                 case 8:
@@ -181,5 +182,37 @@ public class ClinicaCitas {
             return 0;
         }
         return agendadas[i] + reporte(agendadas, i + 1);
+    }
+
+    // Clasifica pacientes según su cantidad de citas
+    // Necesita: arreglos de pacientes y citas agendadas
+    static void clasificarPacientes(String[] paciente, int[] agendadas) {
+        for (int i = 0; i < paciente.length; i++) {
+            if (agendadas[i] == 0) {
+                System.out.println(paciente[i] + " -> Sin citas");
+            } else if (agendadas[i] == 1) {
+                System.out.println(paciente[i] + " -> Paciente espontaneo");
+            } else {
+                System.out.println(paciente[i] + " -> Paciente recurrentes");
+            }
+        }
+    }
+
+    // Muestra pacientes con más de 5 citas agendadas
+    // Necesita: arreglos de pacientes y citas agendadas
+    static void pacientesAltaDemanda(String[] paciente, int[] agendadas) {
+        System.out.println("\n--- PACIENTES CON ALTA DEMANDA ---");
+        boolean hay = false;
+
+        for (int i = 0; i < paciente.length; i++) {
+            if (agendadas[i] > 5) {
+                System.out.println(paciente[i] + " -> " + agendadas[i] + " citas");
+                hay = true;
+            }
+        }
+
+        if (!hay) {
+            System.out.println("No existen pacientes con alta demanda");
+        }
     }
 }
